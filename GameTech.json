@@ -1,0 +1,8 @@
+{
+    "ControlerLedR":"20",
+    "ControlerLedV":"21",
+    "OutputRelayFum":"4",
+    "OutputRelayLed":"17",
+    "Ventil":"12",
+    "DigitSerum":"16"
+}
