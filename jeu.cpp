@@ -107,6 +107,7 @@ void Jeu::Setup()
     digitalWrite(_LedV,LOW);
     digitalWrite(_OutputRelayLed,LOW);
     _Time = QTime::currentTime();
+    _Debounce = QTime::currentTime();
     loadConfigGameFonct("/home/pi/Dev/CodeSequenceur/test_du_soir4/Code_brief/build-generik-Desktop-Debug/GameFonct.json");
     loadConfigGameTech("/home/pi/Dev/CodeSequenceur/test_du_soir4/Code_brief/build-generik-Desktop-Debug/GameTech.json");
     //_BlinkLedR = new Blink();
@@ -198,17 +199,18 @@ void Jeu::main_game_callback()
           {
               if (QTime::currentTime()>_Time)
               {
-                  Clignotement(_LedR);
                   _Time = QTime::currentTime().addMSecs(_BlinkT);
+                  Clignotement(_LedR);
               }
 
-              if((!_AudioPath.isEmpty())&&(_FlagPlayOnceAudioWFV))
+              if((!_AudioPath.isEmpty())&&(_FlagPlayOnceAudioWFV)&&(QTime::currentTime()>_Debounce))
               {
                 _FlagPlayOnceAudioWFV=false;
                 QJsonObject AudioListenWFV;
                 AudioListenWFV.insert("command","play");
                 AudioListenWFV.insert("path",_AudioPath);
                 Signal_RCon_AudioControler(AudioListenWFV);
+                _Debounce = QTime::currentTime().addMSecs(500);
               }
           }
           else

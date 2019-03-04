@@ -48,12 +48,14 @@ public:
 
 
 
+
     QString _AudioPathVentil;
     QString _AudioPath;
+    QTime _Time;
+    QTime _Debounce;
 
     //Blink _BlinkLedR;
     void Clignotement(int Led);
-    QTime _Time;
     QSerialPort _serialPort;
     void loadConfigGameTech(QString config_file);
     void loadConfigGameFonct(QString config_file);
